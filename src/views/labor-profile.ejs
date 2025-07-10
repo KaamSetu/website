@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaamSetu - Labor Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/labor-profile.css">
+</head>
+<body>
+    <header class="header">
+        <div class="toggle-sidebar">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">KaamSetu Labor</div>
+    </header>
+    <nav class="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="/labor/dashboard/<%= laborId %>"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+            <li><a href="/labor/available-jobs/<%= laborId %>"><i class="fas fa-briefcase"></i>Available Jobs</a></li>
+            <li><a href="/labor/past-jobs/<%= laborId %>"><i class="fas fa-history"></i>Past Jobs</a></li>
+            <li><a href="/labor/payment/<%= laborId %>"><i class="fas fa-money-bill-wave"></i>Payments</a></li>
+            <li><a href="/labor/profile/<%= laborId %>" class="active"><i class="fas fa-user"></i>Profile</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <h1>Labor Profile</h1>
+
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <img src="<%= profile.photo || 'https://i.pravatar.cc/300' %>" alt="Labor Profile" class="profile-photo">
+            <div class="profile-details">
+                <h2><%= profile.name %></h2>
+                <p><i class="fas fa-envelope"></i> <%= profile.email %></p>
+                <p><i class="fas fa-phone"></i> +91 <%= profile.phone %></p>
+                <p><i class="fas fa-map-marker-alt"></i> <%= profile.location %></p>
+                <p><i class="fas fa-credit-card"></i> UPI ID: <%= profile.upiId %></p>
+                <button class="btn btn-primary" onclick="openEditProfileModal()">Edit Profile</button>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="skills-section">
+            <h2>Skills</h2>
+            <div class="skills-list">
+                <% profile.skills.forEach(skill => { %>
+                    <span class="skill-tag"><%= skill %></span>
+                <% }) %>
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="performance-metrics">
+            <div class="performance-card">
+                <h3>Total Jobs</h3>
+                <div class="metric"><%= performance.totalJobs %></div>
+            </div>
+            <div class="performance-card">
+                <h3>Job Completion</h3>
+                <div class="metric"><%= performance.jobCompletionRate %>%</div>
+            </div>
+            <div class="performance-card">
+                <h3>Average Rating</h3>
+                <div class="metric"><%= performance.averageRating %></div>
+            </div>
+            <div class="performance-card">
+                <h3>Total Earnings</h3>
+                <div class="metric">₹ <%= performance.totalEarnings.toLocaleString() %></div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+            <h2>Client Reviews</h2>
+            <% reviews.forEach(review => { %>
+            <div class="review-item">
+                <p>"<%= review.comment %>" <span class="review-rating"><%= '★'.repeat(review.rating) %></span></p>
+                <small>- <%= review.clientName %>, <%= review.jobTitle %></small>
+            </div>
+            <% }) %>
+        </div>
+
+        <!-- Account Actions -->
+        <div class="account-actions">
+            <button class="btn btn-primary" onclick="openPasswordUpdateModal()">Update Password</button>
+            <button class="btn btn-primary" onclick="openContactUpdateModal()">Update Contact</button>
+            <button class="btn btn-secondary" onclick="confirmLogout()">Logout</button>
+            <button class="btn btn-secondary" onclick="confirmAccountDeletion()">Delete Account</button>
+        </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <span class="close-modal" onclick="closeModal('editProfileModal')">&times;</span>
+            </div>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label>Profile Photo</label>
+                    <input type="file" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" value="<%= profile.name %>" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" value="<%= profile.email %>" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" value="<%= profile.phone %>" required>
+                </div>
+                <div class="form-group">
+                    <label>UPI ID</label>
+                    <input type="text" value="<%= profile.upiId %>" required>
+                </div>
+                <div class="form-group">
+                    <label>Skills (Comma Separated)</label>
+                    <input type="text" value="<%= profile.skills.join(', ') %>">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" value="<%= profile.location %>" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Password Update Modal -->
+    <div id="passwordUpdateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Update Password</h2>
+                <span class="close-modal" onclick="closeModal('passwordUpdateModal')">&times;</span>
+            </div>
+            <form id="passwordUpdateForm">
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Password</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 KaamSetu. All rights reserved.</p>
+    </footer>
+    <script src="/js/labor-profile.js"></script>
+    <script>
+        // Function to open modal
+        function openEditProfileModal() {
+            document.getElementById('editProfileModal').style.display = 'block';
+        }
+
+        function openPasswordUpdateModal() {
+            document.getElementById('passwordUpdateModal').style.display = 'block';
+        }
+
+        function openContactUpdateModal() {
+            alert('Open contact update modal here');
+        }
+
+        // Function to close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Function to confirm logout
+        function confirmLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/logout';
+            }
+        }
+
+        // Function to confirm account deletion
+        function confirmAccountDeletion() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                alert('Account deletion logic goes here');
+            }
+        }
+
+
+        document.getElementById('updateProfileForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const laborId = document.querySelector('#laborId').value;
+
+  const formData = new FormData(e.target);
+  const profileData = {
+    name: formData.get('name'),
+    phone: formData.get('phone'),
+    skills: formData.get('skills'),
+    upiId: formData.get('upiId')
+  };
+
+  try {
+    const response = await fetch(`/labor/profile/${laborId}/update`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(profileData)
+    });
+
+    if (!response.ok) throw new Error('Failed to update profile');
+    alert('Profile updated successfully!');
+    location.reload(); // Refresh the page to reflect changes
+  } catch (error) {
+    console.error('Error updating profile:', error.message);
+    alert('Failed to update profile. Please try again.');
+  }
+});
+    </script>
+</body>
+</html>
