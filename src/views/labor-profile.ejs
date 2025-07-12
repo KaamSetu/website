@@ -6,13 +6,17 @@
     <title>KaamSetu - Labor Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/labor-profile.css">
+    <link rel="icon" type="image/png" href="/images/1.png">
 </head>
 <body>
     <header class="header">
         <div class="toggle-sidebar">
             <i class="fas fa-bars"></i>
         </div>
-        <div class="logo">KaamSetu Labor</div>
+        <div class="logo">
+            <img src="/images/kaamsetu-sq.jpeg" alt="KaamSetu Logo" class="logo-img" style="height:40px;vertical-align:middle;margin-right:10px;">
+            KaamSetu Labour
+        </div>
     </header>
     <nav class="sidebar">
         <ul class="sidebar-menu">
@@ -28,7 +32,7 @@
 
         <!-- Profile Header -->
         <div class="profile-header">
-            <img src="<%= profile.photo || 'https://i.pravatar.cc/300' %>" alt="Labor Profile" class="profile-photo">
+            <img src="<%= profile.photo || '/images/labour.jpeg' %>" alt="Labor Profile" class="profile-photo">
             <div class="profile-details">
                 <h2><%= profile.name %></h2>
                 <p><i class="fas fa-envelope"></i> <%= profile.email %></p>

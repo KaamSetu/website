@@ -43,6 +43,21 @@ body {
     justify-content: center;
 }
 
+.icons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+    margin-bottom: 1rem;
+
+    img {
+        max-width: 80px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        object-fit: cover;
+        flex: 1;
+    }
+}
+
 .registration-form {
     flex-basis: 60%;
     padding: 2rem;

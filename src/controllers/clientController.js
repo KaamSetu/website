@@ -118,7 +118,7 @@ export const renderProfile = async (req, res) => {
     const formattedData = {
       client: {
         ...client,
-        avatar: client.profilePic || "https://via.placeholder.com/150",
+        avatar: client.profilePic || "",
         totalJobs,
         activeJobs,
         disputes,

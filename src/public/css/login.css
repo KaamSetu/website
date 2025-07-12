@@ -21,7 +21,7 @@ body {
     min-height: 100dvh;
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
 }
-
+        .logo-img { display:block; width: auto; margin:0 auto 1rem; height:48px; }
 .login-container {
     background-color: #fff;
     border-radius: 10px;

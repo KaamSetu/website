@@ -1,8 +1,13 @@
 import multer from 'multer';
+import fs from 'fs';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/temp/jobs'); // Specific folder for job media
+    const dir = 'public/temp/jobs';
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    cb(null, dir); // Specific folder for job media
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);

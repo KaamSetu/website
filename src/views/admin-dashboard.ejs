@@ -6,13 +6,17 @@
     <title>KaamSetu - Admin Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/admin-dashboard.css">
+    <link rel="icon" type="image/png" href="/images/1.png">
 </head>
 <body>
     <header class="header">
         <div class="toggle-sidebar">
             <i class="fas fa-bars"></i>
         </div>
-        <div class="logo">KaamSetu Admin</div>
+        <div class="logo">
+            <img src="/images/1.png" alt="KaamSetu Logo" style="height:40px;width:40px;vertical-align:middle;margin-right:8px;border-radius:8px;" />
+            KaamSetu Admin
+        </div>
         <a href="/logout" class="logout-btn" style="margin-left:auto; color:#fff; background:#00978A; padding:8px 16px; border-radius:4px; text-decoration:none; font-weight:600;">Logout <i class="fas fa-sign-out-alt"></i></a>
     </header>
 
@@ -28,7 +32,7 @@
 
     <main class="main-content">
         <div class="profile-header">
-            <img src="<%= admin.profilePic || 'https://i.pravatar.cc/300' %>" alt="Admin Profile" class="profile-photo">
+            <img src="<%= admin.profilePic || '/images/1.png' %>" alt="Admin Profile" class="profile-photo" style="border-radius:50%;width:80px;height:80px;object-fit:cover;border:3px solid #00978A;box-shadow:0 2px 8px rgba(0,0,0,0.08);background:#fff;" />
             <div class="profile-details">
                 <h2><%= admin.name %></h2>
                 <p><i class="fas fa-envelope"></i> <%= admin.email %></p>

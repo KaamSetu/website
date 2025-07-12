@@ -470,7 +470,7 @@ export const renderProfile = async (req, res) => {
     const formattedData = {
       laborId,
       profile: {
-        photo: laborer.profilePic || "https://via.placeholder.com/150",
+        photo: laborer.profilePic || "",
         name: laborer.name,
         email: laborer.email,
         phone: laborer.phone,

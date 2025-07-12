@@ -6,6 +6,7 @@
     <title>KaamSetu - Client Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/client-dashboard.css">
+    <link rel="icon" type="image/png" href="/images/1.png">
 </head>
 <body>
     <!-- Header -->
@@ -13,11 +14,15 @@
         <div class="toggle-sidebar">
             <i class="fas fa-bars"></i>
         </div>
-        <div class="logo">KaamSetu Client</div>
+        <div class="logo">
+            <img src="/images/kaamsetu-sq.jpeg" alt="KaamSetu Logo" class="logo-img" style="height:40px;vertical-align:middle;margin-right:10px;">
+            KaamSetu Client
+        </div>
     </header>
 
     <!-- Sidebar -->
     <nav class="sidebar">
+
         <ul class="sidebar-menu">
             <li><a href="/client/dashboard/<%= clientId %>" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
             <li><a href="/client/post-job/<%= clientId %>"><i class="fas fa-plus-circle"></i>Post a Job</a></li>
