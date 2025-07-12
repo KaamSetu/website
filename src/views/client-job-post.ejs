@@ -366,27 +366,43 @@ function createPreviewElement(file, fileInput) {
     //   return preview;
     // }
   
-    // Sidebar Responsive Handling
+    // Sidebar Responsive Handling (Mobile and Desktop, matches profile page)
     const toggleBtn = document.querySelector(".toggle-sidebar");
     const sidebar = document.querySelector(".sidebar");
     const mainContent = document.querySelector(".main-content");
     const footer = document.querySelector(".footer");
-  
+
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
     toggleBtn.addEventListener("click", () => {
-      [sidebar, mainContent, footer].forEach(el =>
-        el.classList.toggle("expanded")
-      );
+      if (isMobile()) {
+        sidebar.classList.toggle("active");
+      } else {
+        sidebar.classList.toggle("collapsed");
+        mainContent.classList.toggle("expanded");
+        footer.classList.toggle("expanded");
+      }
     });
-  
+
+    function handleResize() {
+      if (isMobile()) {
+        sidebar.classList.remove("collapsed");
+        mainContent.classList.add("expanded");
+        footer.classList.add("expanded");
+        // Hide sidebar by default on mobile
+        sidebar.classList.remove("active");
+      } else {
+        sidebar.classList.remove("active");
+        sidebar.classList.remove("collapsed");
+        mainContent.classList.remove("expanded");
+        footer.classList.remove("expanded");
+      }
+    }
+
     window.addEventListener("resize", handleResize);
     handleResize(); // Initial call
-  
-    function handleResize() {
-      const isMobile = window.innerWidth <= 768;
-      [sidebar, mainContent, footer].forEach(el =>
-        el.classList.toggle("expanded", isMobile)
-      );
-    }
   });
      </script>
 </body>

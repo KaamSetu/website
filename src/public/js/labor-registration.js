@@ -39,7 +39,7 @@
             window.location.href = `/labor/dashboard/${result.laborId}`;
         } else {
             const error = await response.json();
-            alert(error.message || 'Registration failed!');
+            alert(error.error || 'Registration failed!');
         }
     } catch (err) {
         console.error('Error:', err);

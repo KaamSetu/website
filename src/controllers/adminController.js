@@ -142,6 +142,7 @@ export const renderDisputeManagement = async (req, res) => {
   
       // Format jobs for display
       const formattedJobs = jobs.map(job => ({
+        _id: job._id.toString(),
         title: job.title,
         description: job.description,
         location: job.location,

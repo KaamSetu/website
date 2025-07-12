@@ -36,11 +36,13 @@
             position: fixed;
             width: 100dvw;
             top: 0;
+            left: 0;
             z-index: 1000;
             transition: all 0.3s ease;
         }
 
         nav {
+            padding-inline: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -60,10 +62,12 @@
         }
 
         .nav-links {
+            padding-inline: 1.5rem;
             display: flex;
+            gap: 1rem;
             list-style: none;
-            gap: 1.5rem;
         }
+
 
         .nav-links li {
             margin-left: 1.5rem;
@@ -107,12 +111,6 @@
             padding: 6rem 0;
             text-align: center;
             margin-top: 60px;
-        }
-
-        .hero img {
-            max-width:300px;
-            display:block;
-            margin:0 auto 1rem;
         }
 
         .hero h1 {
@@ -439,11 +437,6 @@
         }
 
         /* Hide nav links on mobile */
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-        }
 
         /* Mobile-specific styles */
         @media (max-width: 768px) {

@@ -30,6 +30,7 @@
             <li><a href="/admin/jobs/<%= adminId %>" class="active"><i class="fas fa-briefcase"></i>Job Management</a></li>
         </ul>
     </nav>
+    <div class="sidebar-overlay"></div>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -61,7 +62,7 @@
                 <tbody>
                     <% jobs.forEach(job => { %>
                     <tr>
-                        <td><%= job.job_id %></td>
+                        <td><%= job._id %></td>
                         <td><%= job.client_name %></td>
                         <td><%= job.job_category %></td>
                         <td><span class="status <%= job.status %>"><%= job.status.replace(/\b\w/g, l => l.toUpperCase()) %></span></td>
@@ -74,7 +75,7 @@
                     </tr>
                     <% }); %>
                     <!-- <tr>
-                        <td>JOB-2024-002</td>
+                        <td>JOB-2025-002</td>
                         <td>Amit Kumar</td>
                         <td>Plumbing Work</td>
                         <td><span class="status completed">Completed</span></td>
@@ -95,7 +96,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 KaamSetu Admin Panel. All rights reserved.</p>
+        <p>&copy; 2025 KaamSetu Admin Panel. All rights reserved.</p>
     </footer>
 
     <script src="/js/admin-job-management.js"></script>
