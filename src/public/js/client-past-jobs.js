@@ -21,30 +21,6 @@ window.onclick = function (event) {
   }
 };
 
-// Sidebar toggle and responsive functions from previous template
-const toggleBtn = document.querySelector(".toggle-sidebar");
-const sidebar = document.querySelector(".sidebar");
-const mainContent = document.querySelector(".main-content");
-const footer = document.querySelector(".footer");
-
-toggleBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("collapsed");
-  mainContent.classList.toggle("expanded");
-  footer.classList.toggle("expanded");
-});
-
-function handleResize() {
-  if (window.innerWidth <= 768) {
-    sidebar.classList.add("collapsed");
-    mainContent.classList.add("expanded");
-    footer.classList.add("expanded");
-  } else {
-    sidebar.classList.remove("collapsed");
-    mainContent.classList.remove("expanded");
-    footer.classList.remove("expanded");
-  }
-}
-
 function openCancellationDetailsModal(jobStr) {
   try {
     // Parse the JSON string
@@ -70,12 +46,38 @@ function closeModal(modalId) {
 }
 
 
-window.addEventListener("resize", handleResize);
-handleResize(); // Initial check
+// Sidebar Responsive Handling (Mobile and Desktop, matches profile page)
+    const toggleBtn = document.querySelector(".toggle-sidebar");
+    const sidebar = document.querySelector(".sidebar");
+    const mainContent = document.querySelector(".main-content");
+    const footer = document.querySelector(".footer");
 
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
 
-/*
-root directory amparo contain node modules, public(folder to store temp img file, during derver side file upload to cloudinary), .env, .gitignore, package.json, server.js and src folder
-src folder contain controllers(the main logic), db(db connection logic), models(mongoose schema), public(folder to store static files - html, js, css), routes( define various routes), utils(helpers), views(ejs templates)
-keep this structure for amparo
-*/
+    toggleBtn.addEventListener("click", () => {
+      if (isMobile()) {
+        sidebar.classList.toggle("collapsed");
+      } else {
+        sidebar.classList.toggle("collapsed");
+        mainContent.classList.toggle("expanded");
+        footer.classList.toggle("expanded");
+      }
+    });
+
+    function handleResize() {
+      if (isMobile()) {
+        sidebar.classList.add("collapsed");
+        mainContent.classList.add("expanded");
+        footer.classList.add("expanded");
+        // Hide sidebar by default on mobile
+      } else {
+        sidebar.classList.remove("collapsed");
+        mainContent.classList.remove("expanded");
+        footer.classList.remove("expanded");
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial call

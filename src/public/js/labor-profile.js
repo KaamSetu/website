@@ -1,77 +1,59 @@
-// // Sidebar toggle script from previous template
-// const toggleBtn = document.querySelector(".toggle-sidebar");
-// const sidebar = document.querySelector(".sidebar");
-// const mainContent = document.querySelector(".main-content");
-// const footer = document.querySelector(".footer");
 
-// toggleBtn.addEventListener("click", () => {
-//   sidebar.classList.toggle("collapsed");
-//   mainContent.classList.toggle("expanded");
-//   footer.classList.toggle("expanded");
-// });
 
-// function handleResize() {
-//   if (window.innerWidth <= 768) {
-//     sidebar.classList.add("collapsed");
-//     mainContent.classList.add("expanded");
-//     footer.classList.add("expanded");
-//   } else {
-//     sidebar.classList.remove("collapsed");
-//     mainContent.classList.remove("expanded");
-//     footer.classList.remove("expanded");
-//   }
-// }
+function confirmLogout() {
+  if (confirm("Are you sure you want to logout?")) {
+    alert("Logout feature is under development!");
+    // window.location.href = "login.html";
+  }
+}
 
-// window.addEventListener("resize", handleResize);
-// handleResize(); // Initial check
+function confirmAccountDeletion() {
+  if (
+    confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    )
+  ) {
+    alert("Account deletion feature is under development!");
+    // window.location.href = "login.html";
+  }
+}
 
-// // Modal Functions
-// function openEditProfileModal() {
-//   document.getElementById("editProfileModal").style.display = "block";
-// }
+// Form submission handlers
+ document.getElementById('editProfileForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const laborId = document.querySelector('#laborId').value;
 
-// function openPasswordUpdateModal() {
-//   document.getElementById("passwordUpdateModal").style.display = "block";
-// }
+  const formData = new FormData(e.target);
+  const profileData = {
+    name: formData.get('name'),
+    phone: formData.get('phone'),
+    skills: formData.get('skills'),
+    upiId: formData.get('upiId')
+  };
 
-// function closeModal(modalId) {
-//   document.getElementById(modalId).style.display = "none";
-// }
+  try {
+    const response = await fetch(`/labor/profile/${laborId}/update`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(profileData)
+    });
 
-// function confirmLogout() {
-//   if (confirm("Are you sure you want to logout?")) {
-//     // Add logout logic here
-//     window.location.href = "login.html";
-//   }
-// }
+    if (!response.ok) throw new Error('Failed to update profile');
+    alert('Profile updated successfully!');
+    location.reload(); // Refresh the page to reflect changes
+  } catch (error) {
+    console.error('Error updating profile:', error.message);
+    alert('Failed to update profile. Please try again.');
+  }
+});
 
-// function confirmAccountDeletion() {
-//   if (
-//     confirm(
-//       "Are you sure you want to delete your account? This action cannot be undone."
-//     )
-//   ) {
-//     // Add account deletion logic here
-//     window.location.href = "login.html";
-//   }
-// }
-
-// // Form submission handlers
-// document
-//   .getElementById("editProfileForm")
-//   .addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     alert("Profile updated successfully!");
-//     closeModal("editProfileModal");
-//   });
-
-// document
-//   .getElementById("passwordUpdateForm")
-//   .addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     alert("Password updated successfully!");
-//     closeModal("passwordUpdateModal");
-//   });
+document
+  .getElementById("passwordUpdateForm")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    alert("Password updatation feature is under development!");
+    closeModal("passwordUpdateModal");
+  });
 
 
 
@@ -80,29 +62,44 @@
 
 // DOM Content Loaded Handler
 document.addEventListener('DOMContentLoaded', () => {
-    // Sidebar Toggle
-    const toggleBtn = document.querySelector('.toggle-sidebar');
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    const footer = document.querySelector('.footer');
+    // Sidebar Responsive Handling (Mobile and Desktop, matches profile page)
+    const toggleBtn = document.querySelector(".toggle-sidebar");
+    const sidebar = document.querySelector(".sidebar");
+    const mainContent = document.querySelector(".main-content");
+    const footer = document.querySelector(".footer");
 
-    // Responsive Handling
-    const handleResize = () => {
-        const isMobile = window.innerWidth <= 768;
-        sidebar.classList.toggle('collapsed', isMobile);
-        mainContent.classList.toggle('expanded', isMobile);
-        footer.classList.toggle('expanded', isMobile);
-    };
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
 
-    // Event Listeners
-    toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        mainContent.classList.toggle('expanded');
-        footer.classList.toggle('expanded');
+    toggleBtn.addEventListener("click", () => {
+      if (isMobile()) {
+        sidebar.classList.toggle("collapsed");
+      } else {
+        sidebar.classList.toggle("collapsed");
+        mainContent.classList.toggle("expanded");
+        footer.classList.toggle("expanded");
+      }
     });
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check
+    function handleResize() {
+      if (isMobile()) {
+        sidebar.classList.add("collapsed");
+        mainContent.classList.add("expanded");
+        footer.classList.add("expanded");
+        // Hide sidebar by default on mobile
+      } else {
+        sidebar.classList.remove("collapsed");
+        mainContent.classList.remove("expanded");
+        footer.classList.remove("expanded");
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial call
+
+
+    
 
     // Modal System
     const modalTriggers = {
@@ -144,6 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+
+
     // Form Handling
     const handleFormSubmit = async (formId, successMessage) => {
         const form = document.getElementById(formId);
@@ -152,24 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            try {
-                const formData = new FormData(form);
-                // Replace with actual fetch call
-                // const response = await fetch('/api/endpoint', {
-                //     method: 'POST',
-                //     body: formData
-                // });
-                
-                // Simulated delay
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                showToast(successMessage, 'success');
-                modalHandler(form.closest('.modal').id, 'close');
-                form.reset();
-            } catch (error) {
-                showToast('An error occurred. Please try again.', 'error');
-                console.error('Form submission error:', error);
-            }
+            alert('This feature is under development!');
         });
     };
 
@@ -187,28 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     handleFormSubmit('editProfileForm', 'Profile updated successfully!');
     handleFormSubmit('passwordUpdateForm', 'Password updated successfully!');
 
-    // Account Actions
-    const confirmAction = (message, callback) => {
-        if (confirm(message)) {
-            callback();
-        }
-    };
 
-    // Logout Handler
-    document.getElementById('logoutBtn')?.addEventListener('click', () => {
-        confirmAction('Are you sure you want to logout?', () => {
-            // Add actual logout logic
-            window.location.href = '/login';
-        });
-    });
-
-    // Account Deletion Handler
-    document.getElementById('deleteAccountBtn')?.addEventListener('click', () => {
-        confirmAction('Are you sure you want to delete your account? This action cannot be undone.', () => {
-            // Add actual deletion logic
-            window.location.href = '/login';
-        });
-    });
 });
 
 

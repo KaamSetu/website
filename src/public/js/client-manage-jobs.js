@@ -137,4 +137,41 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Failed to add update.");
     }
   });
+
+
+// Sidebar Responsive Handling (Mobile and Desktop, matches profile page)
+    const toggleBtn = document.querySelector(".toggle-sidebar");
+    const sidebar = document.querySelector(".sidebar");
+    const mainContent = document.querySelector(".main-content");
+    const footer = document.querySelector(".footer");
+
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      if (isMobile()) {
+        sidebar.classList.toggle("collapsed");
+      } else {
+        sidebar.classList.toggle("collapsed");
+        mainContent.classList.toggle("expanded");
+        footer.classList.toggle("expanded");
+      }
+    });
+
+    function handleResize() {
+      if (isMobile()) {
+        sidebar.classList.add("collapsed");
+        mainContent.classList.add("expanded");
+        footer.classList.add("expanded");
+        // Hide sidebar by default on mobile
+      } else {
+        sidebar.classList.remove("collapsed");
+        mainContent.classList.remove("expanded");
+        footer.classList.remove("expanded");
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial call
 });

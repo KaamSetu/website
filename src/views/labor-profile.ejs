@@ -14,7 +14,7 @@
             <i class="fas fa-bars"></i>
         </div>
         <div class="logo">
-            <img src="/images/kaamsetu-sq.jpeg" alt="KaamSetu Logo" class="logo-img" style="height:40px;vertical-align:middle;margin-right:10px;">
+            <img onclick="window.location.href='/'"  src="/images/kaamsetu-sq.jpeg" alt="KaamSetu Logo" class="logo-img" style="cursor: pointer;height:40px;vertical-align:middle;margin-right:10px;">
             KaamSetu Labour
         </div>
     </header>
@@ -163,67 +163,6 @@
         <p>&copy; 2025 KaamSetu. All rights reserved.</p>
     </footer>
     <script src="/js/labor-profile.js"></script>
-    <script>
-        // Function to open modal
-        function openEditProfileModal() {
-            document.getElementById('editProfileModal').style.display = 'block';
-        }
 
-        function openPasswordUpdateModal() {
-            document.getElementById('passwordUpdateModal').style.display = 'block';
-        }
-
-        function openContactUpdateModal() {
-            alert('Open contact update modal here');
-        }
-
-        // Function to close modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // Function to confirm logout
-        function confirmLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                window.location.href = '/logout';
-            }
-        }
-
-        // Function to confirm account deletion
-        function confirmAccountDeletion() {
-            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                alert('Account deletion logic goes here');
-            }
-        }
-
-
-        document.getElementById('updateProfileForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const laborId = document.querySelector('#laborId').value;
-
-  const formData = new FormData(e.target);
-  const profileData = {
-    name: formData.get('name'),
-    phone: formData.get('phone'),
-    skills: formData.get('skills'),
-    upiId: formData.get('upiId')
-  };
-
-  try {
-    const response = await fetch(`/labor/profile/${laborId}/update`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(profileData)
-    });
-
-    if (!response.ok) throw new Error('Failed to update profile');
-    alert('Profile updated successfully!');
-    location.reload(); // Refresh the page to reflect changes
-  } catch (error) {
-    console.error('Error updating profile:', error.message);
-    alert('Failed to update profile. Please try again.');
-  }
-});
-    </script>
 </body>
 </html>
